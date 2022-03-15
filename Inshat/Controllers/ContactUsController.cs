@@ -18,25 +18,22 @@ namespace Inshat.Controllers
         }
         public  IActionResult Index()
         {
-            var aboutUs = _db.ContactUs.FirstOrDefault();
+            var aboutUs = _db.ContactUs.FirstOrDefault() ??new ContactUs();
             return View(aboutUs);
         }
         public IActionResult Update()
         {
-            var aboutUs = _db.ContactUs.FirstOrDefault();
+            var aboutUs = _db.ContactUs.FirstOrDefault() ?? new ContactUs() ;
             return View(aboutUs);
         }
 
         [HttpPost]
         public IActionResult Update(ContactUs contactUs)
         {
-            var contactus = _db.ContactUs.FirstOrDefault();
-            contactus.Email = contactUs.Email;
-            contactus.PhoneNumber = contactUs.PhoneNumber;
-            contactus.Facebook = contactUs.Facebook;
-            contactus.Instagram = contactUs.Instagram;
-            contactus.Twitter = contactUs.Twitter;
-            contactus.YouTube = contactUs.YouTube;
+            if (contactUs.Id > 0)
+                _db.ContactUs.Update(contactUs);
+            else
+                _db.ContactUs.Add(contactUs);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

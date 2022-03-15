@@ -17,27 +17,24 @@
 
         <form method="post" enctype="multipart/form-data">
             <div>
+                <input type="hidden" asp-for="Id" />
                 <label asp-for="Title"></label>
                 <input type="text" asp-for="Title" />
             </div>
             <div class="col-md-12" style="margin-top:50px; margin-bottom:50px">
                 <textarea rows="10" type="text" id="EditDes" asp-for="Description"></textarea>
             </div>
+            <input type="hidden" asp-for="Image"  />
             <div>
                 <img  src="~/Uploads/Blog/@(Model.Image).png" id="file-ip-1-preview" alt="Alternate Text" />
             </div>
             <div>
-                <label asp-for="Image"> Image</label>
+                <label > Image</label>
                 <input type="file" name="file" accept="image/*" onchange="showPreview(event);" />
             </div>
 
-
-
-
-
-
             <div>
-                <button type="submit">Create</button>
+                <button type="submit">Update</button>
             </div>
 
         </form>

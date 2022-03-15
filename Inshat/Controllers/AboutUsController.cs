@@ -25,28 +25,32 @@ namespace Inshat.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var aboutUs = await _db.AboutUs.FirstOrDefaultAsync();
+            var aboutUs = await _db.AboutUs.FirstOrDefaultAsync() ?? new AboutUs();
             return View(aboutUs);
         }
 
         public IActionResult Update()
         {
-            var aboutUs = _db.AboutUs.FirstOrDefault();
+            var aboutUs = _db.AboutUs.FirstOrDefault() ?? new AboutUs();
             return View(aboutUs);
         }
         [HttpPost]
         public IActionResult Update(AboutUs aboutUs, IFormFile file)
         {
-            var about = _db.AboutUs.FirstOrDefault();
-            about.Title = aboutUs.Title;
-            about.Description = aboutUs.Description;
-            if (file !=null)
+            if (aboutUs.Id > 0)
             {
+                _db.AboutUs.Update(aboutUs);
                 var image = _FileManaging.SavingImage("AboutUs", file);
-                _FileManaging.DeleteImage("AboutUs", about.Image);
-                about.Image = image ?? about.Image;
+                _FileManaging.DeleteImage("AboutUs", aboutUs.Image);
+                aboutUs.Image = image ?? aboutUs.Image;
             }
-             _db.SaveChanges();
+            else
+            {
+                _db.AboutUs.Add(aboutUs);
+                var image = _FileManaging.SavingImage("AboutUs", file);
+                aboutUs.Image = image;
+            }
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
     }
