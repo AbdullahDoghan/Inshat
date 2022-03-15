@@ -18,8 +18,10 @@ namespace Inshat.Data.ManagingFiles
         public string SavingImage(string ImageFolder, IFormFile file)
         {
             var ImageId = Guid.NewGuid();
+            string FullFileName = null;
             if (file != null)
             {
+               
                 string filename = file.FileName;
                 string strpath = System.IO.Path.GetExtension(filename);
                 var Upload = Path.Combine(_hostingEnvironment.WebRootPath, $"Uploads/{ImageFolder}/{ImageId}{strpath}");
@@ -27,13 +29,15 @@ namespace Inshat.Data.ManagingFiles
                 {
                      file.CopyTo(stream);
                 }
+                FullFileName = ImageId+strpath;
             }
-            return ImageId.ToString();
+            
+            return FullFileName;
         }
         public bool DeleteImage(string ImageFolder, string FileName)
         {
-            string strpath = System.IO.Path.GetExtension(FileName);
-            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, $"Uploads/{ImageFolder}/{FileName}{strpath}");
+           
+            var filePath = Path.Combine(_hostingEnvironment.WebRootPath, $"Uploads/{ImageFolder}/{FileName}");
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);

@@ -65,7 +65,8 @@ namespace Inshat.Controllers
             if (file != null)
             {
                 var image = _FileManaging.SavingImage("Blog", file);
-                _FileManaging.DeleteImage("Blog", blog.Image);
+                if (image != null)
+                    _FileManaging.DeleteImage("Blog", blog.Image);
                 blog.Image = image ?? blog.Image;
             }
             await _service.UpdateAsync(id, blog);

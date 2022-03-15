@@ -37,11 +37,16 @@ namespace Inshat.Controllers
         [HttpPost]
         public IActionResult Update(AboutUs aboutUs, IFormFile file)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(aboutUs);
+            }
             if (aboutUs.Id > 0)
             {
                 _db.AboutUs.Update(aboutUs);
                 var image = _FileManaging.SavingImage("AboutUs", file);
-                _FileManaging.DeleteImage("AboutUs", aboutUs.Image);
+                if (image != null)
+                    _FileManaging.DeleteImage("AboutUs", aboutUs.Image);
                 aboutUs.Image = image ?? aboutUs.Image;
             }
             else

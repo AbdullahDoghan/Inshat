@@ -27,7 +27,7 @@
                         <tr class="odd-gradeX">
                            <td>@item.Title</td>
                            <td>@Html.Raw(item.Description)</td>
-                           <td><img src="~/Uploads/Blog/@(item.Image).png"/></td>
+                           <td><img src="~/Uploads/Blog/@(item.Image)"/></td>
                            <td>
                                <a asp-action="Update" asp-route-id ="@item.Id"><button class="btn btn-success">Update</button></a>
                                <a asp-action="Delete" asp-route-id="@item.Id"><button class="btn btn-danger">Delete</button></a>

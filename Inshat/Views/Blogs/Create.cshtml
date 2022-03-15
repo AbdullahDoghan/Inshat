@@ -19,9 +19,11 @@
             <div>
                 <label asp-for="Title"></label>
                 <input type="text" asp-for="Title" />
+                <span asp-validation-for="Title"></span>
             </div>
             <div class="col-md-12" style="margin-top:50px; margin-bottom:50px">
                 <textarea rows="10" type="text" id="EditDes" asp-for="Description"></textarea>
+                <span asp-validation-for="Description"></span>
             </div>
             <div>
                 <img src="" id="file-ip-1-preview" alt="Alternate Text" />
